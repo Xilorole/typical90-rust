@@ -1,21 +1,20 @@
 N = int(input())
 
-def func(patterns, n):
-  ret = [] 
-  for pattern, cnt, length in patterns:
-    if length == N:
-      if cnt == 0:
-	      ret += [pattern]
+def check(candidate):
+  cnt = 0
+  for char in candidate:
+    if char == "(":
+      cnt += 1
     else:
-      if cnt > 0:
-        ret += func(
-          [(pattern+"(", cnt+1, length+1),
-           (pattern+")", cnt-1, length+1)],
-          n)
-      else:
-        ret += func([(pattern+"(", cnt+1, length+1)], n)
-  return ret
+      cnt -= 1
+    if cnt < 0:
+      return False
+  if cnt == 0:
+    return True
+  else:
+    return False
 
-if N%2 == 0:
-  for p in func([("(", 1, 1)], N):
-    print(p)
+for i in range(1<<N):
+  candidate = "".join(["(" if (i & (1 << j)) == 0 else ")" for j in range(N-1, -1, -1) ])
+  if check(candidate):
+    print(candidate)
