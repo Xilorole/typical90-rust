@@ -3,7 +3,7 @@ N = int(input())
 def check(candidate):
   cnt = 0
   for char in candidate:
-    if char == "(":
+    if char == "1":
       cnt += 1
     else:
       cnt -= 1
@@ -14,7 +14,7 @@ def check(candidate):
   else:
     return False
 
-for i in range(1<<N):
-  candidate = "".join(["(" if (i & (1 << j)) == 0 else ")" for j in range(N-1, -1, -1) ])
+for i in range(2 ** N-1,-1,-1):
+  candidate = f"{i:020b}"[-N:]
   if check(candidate):
-    print(candidate)
+    print(candidate.replace("1","(").replace("0",")"))
